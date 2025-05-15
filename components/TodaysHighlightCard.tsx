@@ -1,4 +1,11 @@
-import { MoonIcon, SunIcon } from 'lucide-react'
+import {
+  DropletIcon,
+  EyeIcon,
+  MoonIcon,
+  SunIcon,
+  ThermometerIcon,
+  WavesIcon,
+} from 'lucide-react'
 
 export default function TodaysHighlightCard() {
   return (
@@ -37,21 +44,58 @@ export default function TodaysHighlightCard() {
             </div>
           </div>
         </div>
-        {/* <div className="rounded-xl h-[150px] p-6">Humidity</div> */}
+
+        {/* Humidity */}
         <div className="bg-black/15 rounded-2xl h-[150px] p-6 flex flex-col justify-between">
           <h3 className="text-base font-semibold text-[#7B7980]">Humidity</h3>
-          <div className="flex flex-row items-center gap-x-2 my-4">
+          <div className="flex flex-row items-center gap-x-2">
             <div className="flex w-full gap-6 items-center justify-between">
-              <SunIcon className="size-12" />
+              <DropletIcon className="size-12" />
               <p className="text-4xl text-white font-normal">
-                69<sup className="text-4xl align-bottom">%</sup>
+                69<span className="text-2xl">%</span>
               </p>
             </div>
           </div>
         </div>
-        <div className="rounded-xl h-[150px] p-6">Pressure</div>
-        <div className="rounded-xl h-[150px] p-6">Visibility</div>
-        <div className="rounded-xl h-[150px] p-6">Feels Like</div>
+
+        {/* Pressure */}
+        <div className="bg-black/15 rounded-2xl h-[150px] p-6 flex flex-col justify-between">
+          <h3 className="text-base font-semibold text-[#7B7980]">Pressure</h3>
+          <div className="flex flex-row items-center gap-x-2">
+            <div className="flex w-full gap-6 items-center justify-between">
+              <WavesIcon className="size-12" />
+              <p className="text-4xl text-white font-normal">
+                1024<span className="text-2xl">hPa</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Visibility */}
+        <div className="bg-black/15 rounded-2xl h-[150px] p-6 flex flex-col justify-between">
+          <h3 className="text-base font-semibold text-[#7B7980]">Visibility</h3>
+          <div className="flex flex-row items-center gap-x-2">
+            <div className="flex w-full gap-6 items-center justify-between">
+              <EyeIcon className="size-12" />
+              <p className="text-4xl text-white font-normal">
+                10<span className="text-2xl">km</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Feels Like */}
+        <div className="bg-black/15 rounded-2xl h-[150px] p-6 flex flex-col justify-between">
+          <h3 className="text-base font-semibold text-[#7B7980]">Feels Like</h3>
+          <div className="flex flex-row items-center gap-x-2">
+            <div className="flex w-full gap-6 items-center justify-between">
+              <ThermometerIcon className="size-12" />
+              <p className="text-4xl text-white font-normal">
+                12°<span className="text-2xl">c</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
