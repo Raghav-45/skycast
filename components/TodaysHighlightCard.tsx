@@ -75,7 +75,7 @@ export default function TodaysHighlightCard() {
           <div className="flex flex-row items-center gap-x-2">
             <div className="flex w-full gap-6 items-center justify-between">
               <DropletIcon className="size-12" />
-              <p className="text-4xl text-white font-normal">
+              <p className="text-3xl text-[#DDDAE5] font-semibold">
                 69<span className="text-2xl">%</span>
               </p>
             </div>
@@ -88,7 +88,7 @@ export default function TodaysHighlightCard() {
           <div className="flex flex-row items-center gap-x-2">
             <div className="flex w-full gap-6 items-center justify-between">
               <WavesIcon className="size-12" />
-              <p className="text-4xl text-white font-normal">
+              <p className="text-3xl text-[#DDDAE5] font-semibold">
                 1024<span className="text-2xl">hPa</span>
               </p>
             </div>
@@ -101,7 +101,7 @@ export default function TodaysHighlightCard() {
           <div className="flex flex-row items-center gap-x-2">
             <div className="flex w-full gap-6 items-center justify-between">
               <EyeIcon className="size-12" />
-              <p className="text-4xl text-white font-normal">
+              <p className="text-3xl text-[#DDDAE5] font-semibold">
                 10<span className="text-2xl">km</span>
               </p>
             </div>
@@ -114,7 +114,7 @@ export default function TodaysHighlightCard() {
           <div className="flex flex-row items-center gap-x-2">
             <div className="flex w-full gap-6 items-center justify-between">
               <ThermometerIcon className="size-12" />
-              <p className="text-4xl text-white font-normal">
+              <p className="text-3xl text-[#DDDAE5] font-semibold">
                 12°<span className="text-2xl">c</span>
               </p>
             </div>
