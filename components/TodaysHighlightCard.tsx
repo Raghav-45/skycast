@@ -5,6 +5,7 @@ import {
   SunIcon,
   ThermometerIcon,
   WavesIcon,
+  WindIcon,
 } from 'lucide-react'
 
 export default function TodaysHighlightCard() {
@@ -14,10 +15,33 @@ export default function TodaysHighlightCard() {
         Todays Highlights
       </h2>
       <div className="grid grid-cols-4 gap-4">
-        <div className="bg-black/15 rounded-2xl col-span-2 h-[180px] p-6">
+        <div className="bg-black/15 rounded-2xl col-span-2 h-[180px] p-6 flex flex-col justify-between">
           <h3 className="text-base font-semibold text-[#7B7980]">
             Air Quality Index
           </h3>
+          <div className="flex w-full gap-6 items-center my-4">
+            <WindIcon className="size-12" />
+            <div className="flex flex-row w-full justify-evenly">
+              <div className="flex flex-col items-center">
+                <p className="text-sm font-semibold text-[#7B7980] mb-1">
+                  PM2.5
+                </p>
+                <p className="text-3xl font-semibold text-[#DDDAE5]">4.74</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm font-semibold text-[#7B7980] mb-1">SO2</p>
+                <p className="text-3xl font-semibold text-[#DDDAE5]">6.25</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm font-semibold text-[#7B7980] mb-1">NO2</p>
+                <p className="text-3xl font-semibold text-[#DDDAE5]">8.77</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm font-semibold text-[#7B7980] mb-1">O3</p>
+                <p className="text-3xl font-semibold text-[#DDDAE5]">87.0</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="bg-black/15 rounded-2xl col-span-2 h-[180px] p-6 flex flex-col justify-between">
           <h3 className="text-base font-semibold text-[#7B7980]">
