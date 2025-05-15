@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter, Nunito_Sans } from 'next/font/google'
+import { Nunito_Sans } from 'next/font/google'
 import './globals.css'
+import { cn } from '@/lib/utils'
 
 const nunito = Nunito_Sans({
   subsets: ['latin'],
   weight: ['400', '600'],
+  display: 'swap',
   variable: '--font-nunito-sans',
-});
+})
 
 export const metadata: Metadata = {
   title: 'Sky Cast',
@@ -21,9 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nunito.variable} antialiased`}
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased dark',
+          nunito.variable
+        )}
       >
-        {children}
+        <div className="relative flex min-h-screen flex-col bg-background">
+          {children}
+        </div>
       </body>
     </html>
   )
