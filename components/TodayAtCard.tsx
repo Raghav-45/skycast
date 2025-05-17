@@ -112,7 +112,7 @@ const windData = [
 
 export default function TodayAtCard() {
   return (
-    <div className="p-2 text-[#DDDAE5] h-full flex flex-col gap-y-3">
+    <div className="pt-2 text-[#DDDAE5] h-full flex flex-col gap-y-3">
       <h2 className="text-xl font-semibold text-[#DDDAE5]">Today At</h2>
       <div className="grid grid-cols-8 gap-4">
         {timeData.map((data, index) => (

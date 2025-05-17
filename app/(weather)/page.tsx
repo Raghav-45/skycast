@@ -13,7 +13,7 @@ export default function Home() {
           <CurrentWeatherCard />
           <FiveDayForecastCard />
         </div>
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
           <TodaysHighlightCard />
           <TodayAtCard />
         </div>
