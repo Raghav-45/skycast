@@ -1,4 +1,5 @@
-import {  DropletIcon,
+import {
+  DropletIcon,
   MoonIcon,
   SunIcon,
   ThermometerIcon,
@@ -6,6 +7,7 @@ import {  DropletIcon,
   WindIcon,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { Component } from './TestChart'
 
 interface TodaysHighlightProps {
   data?: {
@@ -18,6 +20,17 @@ interface TodaysHighlightProps {
     daily: {
       sunrise: string[]
       sunset: string[]
+    }
+    hourly: {
+      time: string[]
+      temperature_2m: number[]
+      relative_humidity_2m: number[]
+      wind_speed_10m: number[]
+      wind_direction_10m: number[]
+      weather_code: number[]
+      apparent_temperature: number[]
+      precipitation_probability: number[]
+      precipitation: number[]
     }
   }
 }
@@ -65,12 +78,11 @@ export default function TodaysHighlightCard({ data }: TodaysHighlightProps) {
         Todays Highlights
       </h2>
       <div className="grid grid-cols-4 gap-4">
+        <Component data={data} />
         <div className="relative bg-black/15 rounded-2xl col-span-2 h-[180px] p-6 flex flex-col justify-between">
           <div className="absolute top-5 right-5">
             <Badge
-              className={`${
-                aqiStatus.color
-              } hover:bg-amber-600/10 shadow-none rounded-full`}
+              className={`${aqiStatus.color} hover:bg-amber-600/10 shadow-none rounded-full`}
             >
               <div className="h-1.5 w-1.5 rounded-full bg-current mr-2" />
               {aqiStatus.text}
