@@ -59,7 +59,7 @@ export function Component({ data }: ChartProps) {
   })
 
   // Custom tooltip label formatter to show the PPPp formatted date
-  const customLabelFormatter = (label, payload) => {
+  const customLabelFormatter = (label: string, payload: Array<unknown>) => {
     if (payload && payload.length > 0) {
       const dataItem = chartData.find((item) => item.time === label)
       return dataItem ? dataItem.formattedTime : label
