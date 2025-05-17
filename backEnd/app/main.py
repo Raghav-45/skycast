@@ -12,13 +12,13 @@ app = FastAPI(
 # Configure CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Update with your frontend URL
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include routers
+# Routes for weather and hazards endpoints
 app.include_router(weather.router, prefix="/api/weather", tags=["weather"])
 app.include_router(hazards.router, prefix="/api/hazards", tags=["hazards"])
 
