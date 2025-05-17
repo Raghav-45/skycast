@@ -7,7 +7,7 @@ import {
   WavesIcon,
   WindIcon,
 } from 'lucide-react'
-import { Badge } from './ui/badge'
+import { Badge } from '@/components/ui/badge'
 
 export default function TodaysHighlightCard() {
   return (

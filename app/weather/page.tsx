@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import CurrentWeatherCard from '@/components/CurrentWeatherCard'
 import TodaysHighlightCard from '@/components/TodaysHighlightCard'
 import TodayAtCard from '@/components/TodayAtCard'
