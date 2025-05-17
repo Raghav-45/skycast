@@ -35,8 +35,8 @@ A full-stack weather application that provides detailed weather information with
 
 ```
 ├── frontEnd/
-│   ├── app/                 # Next.js app directory
-│   ├── components/          # React components
+│   ├── app/                # Next.js app directory
+│   ├── components/         # React components
 │   ├── lib/                # Utility functions and types
 │   └── public/             # Static assets and weather icons
 │
