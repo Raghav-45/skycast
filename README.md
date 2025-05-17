@@ -101,4 +101,4 @@ uvicorn app.main:app --reload
 
 ---
 
-*This project was developed as part of a technical assessment, demonstrating full-stack development capabilities using modern web technologies.*
+*Focusing on clean architecture, performance, and user experience. The implementation showcases my ability to create production-ready applications while maintaining high code quality standards.*
