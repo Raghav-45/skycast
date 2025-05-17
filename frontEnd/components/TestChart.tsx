@@ -8,20 +8,6 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { format } from 'date-fns'
-const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
-  { month: 'July', desktop: 180, mobile: 150 },
-  { month: 'August', desktop: 220, mobile: 160 },
-  { month: 'September', desktop: 195, mobile: 170 },
-  { month: 'October', desktop: 240, mobile: 140 },
-  { month: 'November', desktop: 190, mobile: 130 },
-  { month: 'December', desktop: 210, mobile: 150 },
-]
 
 const chartConfig = {
   temperature: {
@@ -47,21 +33,41 @@ interface ChartProps {
 export function Component({ data }: ChartProps) {
   if (!data) return null
 
-  const chartData = data.hourly.time.map((time, index) => ({
-    time: format(new Date(time), 'yyyy-MM-dd'), // Extract unique date
-    temperature: data.hourly.temperature_2m[index],
-    humidity: data.hourly.relative_humidity_2m[index],
-  }))
+  const chartData = data.hourly.time.map((time, index) => {
+    const date = new Date(time)
+    return {
+      time: time, // Keep original ISO timestamp
+      formattedTime: format(date, 'PPPp'), // Format for tooltip: "May 18th, 2025 at 12:00 PM"
+      formattedDate: format(date, 'MMM d'), // Format for X-axis: "May 18"
+      dateForGrouping: format(date, 'yyyy-MM-dd'), // For grouping unique dates
+      temperature: data.hourly.temperature_2m[index],
+      humidity: data.hourly.relative_humidity_2m[index],
+    }
+  })
 
   // Extract unique dates for X-axis ticks
-  const uniqueDates = [...new Set(chartData.map((item) => item.time))]
+  const uniqueDates = [
+    ...new Set(chartData.map((item) => item.dateForGrouping)),
+  ].map((dateStr) => {
+    const index = chartData.findIndex(
+      (item) => item.dateForGrouping === dateStr
+    )
+    return {
+      dateForGrouping: dateStr,
+      formattedDate: chartData[index].formattedDate,
+    }
+  })
+
+  // Custom tooltip label formatter to show the PPPp formatted date
+  const customLabelFormatter = (label, payload) => {
+    if (payload && payload.length > 0) {
+      const dataItem = chartData.find((item) => item.time === label)
+      return dataItem ? dataItem.formattedTime : label
+    }
+    return label
+  }
 
   return (
-    // <div className="relative bg-black/15 rounded-2xl col-span-4 h-[180px] p-6 flex flex-col justify-between">
-    //   <h3 className="text-base font-semibold text-[#7B7980]">
-    //     Humidity & Temprature Graph
-    //   </h3>
-    //   <div className="flex w-full items-center my-4">
     <ChartContainer
       config={chartConfig}
       className="bg-black/15 rounded-2xl col-span-4 h-[180px] w-full"
@@ -81,11 +87,28 @@ export function Component({ data }: ChartProps) {
           tickLine
           axisLine={false}
           tickMargin={9}
-          // Show only the unique dates (e.g., 3 intervals)
-          ticks={uniqueDates}
-          tickFormatter={(value) => format(new Date(value), 'MMM dd')}
+          // Show only unique dates
+          ticks={
+            uniqueDates
+              .map(
+                (d) =>
+                  chartData.find(
+                    (item) => item.dateForGrouping === d.dateForGrouping
+                  )?.time
+              )
+              .filter(Boolean) as string[]
+          }
+          tickFormatter={(value) => {
+            const dataItem = chartData.find((item) => item.time === value)
+            return dataItem ? dataItem.formattedDate : ''
+          }}
         />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+        <ChartTooltip
+          cursor={false}
+          content={
+            <ChartTooltipContent labelFormatter={customLabelFormatter} />
+          }
+        />
         <defs>
           <linearGradient id="fillTemperature" x1="0" y1="0" x2="0" y2="1">
             <stop
@@ -130,7 +153,5 @@ export function Component({ data }: ChartProps) {
         />
       </AreaChart>
     </ChartContainer>
-    //   </div>
-    // </div>
   )
 }
