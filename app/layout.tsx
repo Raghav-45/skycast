@@ -28,7 +28,7 @@ export default function RootLayout({
           nunito.variable
         )}
       >
-        <div className="relative flex min-h-screen flex-col bg-background">
+        <div className="relative flex min-h-screen flex-col bg-[#131214]">
           {children}
         </div>
       </body>
