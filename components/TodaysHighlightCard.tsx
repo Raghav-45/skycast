@@ -7,6 +7,7 @@ import {
   WavesIcon,
   WindIcon,
 } from 'lucide-react'
+import { Badge } from './ui/badge'
 
 export default function TodaysHighlightCard() {
   return (
@@ -15,7 +16,13 @@ export default function TodaysHighlightCard() {
         Todays Highlights
       </h2>
       <div className="grid grid-cols-4 gap-4">
-        <div className="bg-black/15 rounded-2xl col-span-2 h-[180px] p-6 flex flex-col justify-between">
+        <div className="relative bg-black/15 rounded-2xl col-span-2 h-[180px] p-6 flex flex-col justify-between">
+          <div className="absolute top-5 right-5">
+            <Badge className="bg-amber-600/10 dark:bg-amber-600/20 hover:bg-amber-600/10 text-amber-500 border-amber-600/60 shadow-none rounded-full">
+              {/* <div className="h-1.5 w-1.5 rounded-full bg-amber-500 mr-2" /> */}
+              Fair
+            </Badge>
+          </div>
           <h3 className="text-base font-semibold text-[#7B7980]">
             Air Quality Index
           </h3>
