@@ -10,13 +10,13 @@ import {
 import { format } from 'date-fns'
 
 const chartConfig = {
-  temperature: {
-    label: 'Temperature (°C)',
-    color: 'hsl(var(--chart-1))',
-  },
   humidity: {
     label: 'Humidity (%)',
     color: 'hsl(var(--chart-2))',
+  },
+  temperature: {
+    label: 'Temperature (°C)',
+    color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
 
