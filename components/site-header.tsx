@@ -1,9 +1,47 @@
-'use client'
+"use client";
 
-import { Search, MapPin, ArrowLeft } from 'lucide-react'
-import Link from 'next/link'
+import { useState } from "react";
+import { Search, MapPin, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
-export function SiteHeader() {
+interface HeaderProps {
+  onSearch?: (query: string) => void;
+}
+
+export function SiteHeader({ onSearch }: HeaderProps) {
+  const [searchActive, setSearchActive] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [searching, setSearching] = useState(false);
+  const [searchResults, setSearchResults] = useState<Array<{name: string, country: string}>>([]);
+
+  const toggleSearch = () => {
+    setSearchActive(!searchActive);
+    if (searchActive) {
+      setSearchValue("");
+      setSearchResults([]);
+    }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchValue.trim()) return;
+    
+    // Simulating search functionality
+    setSearching(true);
+    // In a real application, you would call your API here
+    setTimeout(() => {
+      setSearching(false);
+      // Mock results - replace with actual API call
+      setSearchResults([
+        { name: "London", country: "GB" },
+        { name: "New York", country: "US" },
+        { name: "Tokyo", country: "JP" }
+      ]);
+      if (onSearch) onSearch(searchValue);
+    }, 1000);
+  };
+
   return (
     <header className="bg-[#131214] text-[#EAE6F2]">
       <div className="max-w-[1600px] w-full mx-auto p-4 md:p-6 lg:p-9 flex justify-between items-center h-[80px] md:h-[96px] lg:h-[110px]">
@@ -18,8 +56,7 @@ export function SiteHeader() {
         </Link>
 
         {/* Search View */}
-        <div
-          className={`
+        <div className={`
           fixed top-0 left-0 w-full h-screen bg-[#1D1C1F] text-[#DDDAE5] 
           ${searchActive ? 'opacity-100 visible' : 'opacity-0 invisible'}
           transition-all duration-500 ease-in-out
@@ -27,16 +64,15 @@ export function SiteHeader() {
           ${searchActive ? 'clip-path-circle-full' : 'clip-path-circle-small'}
           lg:static lg:w-[500px] lg:h-auto lg:bg-transparent lg:opacity-100 lg:visible lg:clip-path-none
         `}
-          style={{
-            clipPath: searchActive
-              ? 'circle(130% at 73% 5%)'
-              : 'circle(4% at calc(100% - 102px) 5%)',
-          }}
-        >
+        style={{
+          clipPath: searchActive ? 
+            'circle(130% at 73% 5%)' : 
+            'circle(4% at calc(100% - 102px) 5%)'
+        }}>
           {/* Search Form */}
           <div className="relative border-b border-[#3E3D40] lg:border-none">
             <form onSubmit={handleSearch} className="relative">
-              <input
+              <input 
                 type="search"
                 placeholder="Search city..."
                 className={`
@@ -47,15 +83,15 @@ export function SiteHeader() {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
-
-              <Search
+              
+              <Search 
                 className={`
                   absolute top-1/2 left-7 transform -translate-y-1/2 -translate-x-1/2
                   text-[#DDDAE5] w-6 h-6
                 `}
               />
-
-              <button
+              
+              <button 
                 type="button"
                 className={`
                   absolute top-1/2 right-4 transform -translate-y-1/2
@@ -66,7 +102,7 @@ export function SiteHeader() {
               >
                 <ArrowLeft className="w-6 h-6 text-[#DDDAE5]" />
               </button>
-
+              
               {/* Loading indicator */}
               {searching && (
                 <div className="absolute top-1/2 right-16 transform -translate-y-1/2 w-6 h-6 border-3 border-[#DDDAE5] border-t-transparent rounded-full animate-spin lg:right-4"></div>
@@ -80,14 +116,12 @@ export function SiteHeader() {
               <ul>
                 {searchResults.map((result, index) => (
                   <li key={index}>
-                    <Link
+                    <Link 
                       href={`/weather?city=${result.name}`}
                       className="relative h-14 flex items-center gap-4 px-4 py-2 hover:bg-[rgba(255,255,255,0.04)] rounded-lg"
                     >
                       <MapPin className="w-5 h-5 text-[#DDDAE5]" />
-                      <span>
-                        {result.name}, {result.country}
-                      </span>
+                      <span>{result.name}, {result.country}</span>
                     </Link>
                   </li>
                 ))}
@@ -99,7 +133,7 @@ export function SiteHeader() {
         {/* Header Actions */}
         <div className="flex items-center gap-4 md:gap-6">
           {/* Search Button (Mobile) */}
-          <button
+          <button 
             className="w-12 h-12 grid place-items-center bg-[rgba(255,255,255,0.08)] rounded-full hover:shadow-sm hover:bg-[rgba(255,255,255,0.12)] lg:hidden"
             onClick={toggleSearch}
             aria-label="Open search"
@@ -108,7 +142,7 @@ export function SiteHeader() {
           </button>
 
           {/* Current Location Button */}
-          <Link
+          <Link 
             href="/current-location"
             className="
               h-12 bg-[#B5A1E5] text-[#100E17] rounded-full 
@@ -118,12 +152,10 @@ export function SiteHeader() {
             "
           >
             <MapPin className="w-5 h-5" />
-            <span className="hidden md:block font-semibold">
-              Current Location
-            </span>
+            <span className="hidden md:block font-semibold">Current Location</span>
           </Link>
         </div>
       </div>
     </header>
-  )
+  );
 }
