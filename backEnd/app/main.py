@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import hazards, weather
+from app.db.redis_client import redis_client
 
 app = FastAPI(
     title="Climate Hazard Trend Analyzer",
@@ -24,6 +25,15 @@ app.include_router(hazards.router, prefix="/api/hazards", tags=["hazards"])
 @app.get("/")
 async def root():
     return {"message": "Climate Hazard Trend Analyzer API"}
+
+@app.get("/health")
+async def health_check():
+    """Check the health of the API and Redis connection"""
+    redis_status = await redis_client.health_check()
+    return {
+        "status": "healthy" if redis_status else "degraded",
+        "redis": "connected" if redis_status else "disconnected"
+    }
 
 if __name__ == "__main__":
     import uvicorn
