@@ -19,7 +19,7 @@ export default function TodaysHighlightCard() {
         <div className="relative bg-black/15 rounded-2xl col-span-2 h-[180px] p-6 flex flex-col justify-between">
           <div className="absolute top-5 right-5">
             <Badge className="bg-amber-600/10 dark:bg-amber-600/20 hover:bg-amber-600/10 text-amber-500 border-amber-600/60 shadow-none rounded-full">
-              {/* <div className="h-1.5 w-1.5 rounded-full bg-amber-500 mr-2" /> */}
+              <div className="h-1.5 w-1.5 rounded-full bg-amber-500 mr-2" />
               Fair
             </Badge>
           </div>

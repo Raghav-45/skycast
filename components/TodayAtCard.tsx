@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 const timeData = [
   {
     time: '7 PM',
@@ -119,10 +121,10 @@ export default function TodayAtCard() {
             className="bg-[#1D1C1F] rounded-2xl p-4 flex flex-col items-center gap-2"
           >
             <p>{data.time}</p>
-            <img
+            <Image
               src={data.image_url}
-              width="48"
-              height="48"
+              height={48}
+              width={48}
               loading="lazy"
               alt={data.condition}
               title={data.condition}
@@ -136,10 +138,10 @@ export default function TodayAtCard() {
             className="bg-[#1D1C1F] rounded-2xl p-4 flex flex-col items-center gap-2"
           >
             <p>{data.time}</p>
-            <img
+            <Image
               src={data.image_url}
-              width="48"
-              height="48"
+              height={48}
+              width={48}
               loading="lazy"
               alt={data.condition}
               title={data.condition}

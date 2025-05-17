@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface ForecastDay {
   date: string
   day: string
@@ -58,10 +60,10 @@ export default function FiveDayForecastCard() {
         {forecastData.map((day, index) => (
           <div key={index} className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img
+              <Image
                 src={day.image_url}
-                width="36"
-                height="36"
+                height={36}
+                width={36}
                 loading="lazy"
                 alt={day.condition}
                 title={day.condition}
