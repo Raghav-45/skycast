@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Nunito_Sans } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
-import { Suspense } from 'react'
 
 const nunito = Nunito_Sans({
   subsets: ['latin'],
@@ -30,7 +29,7 @@ export default function RootLayout({
         )}
       >
         <div className="relative flex min-h-screen flex-col bg-[#131214]">
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          {children}
         </div>
       </body>
     </html>
