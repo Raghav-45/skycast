@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function CurrentWeatherCard() {
   return (
-    <div className="bg-[#1D1C1F] rounded-3xl p-8 text-[#DDDAE5] h-full flex flex-col gap-y-3">
+    <div className="bg-[#1D1C1F] rounded-3xl p-8 text-[#DDDAE5] w-full flex flex-col gap-y-3">
       <h2 className="text-xl font-semibold text-[#DDDAE5]">Now</h2>
       <div className="flex items-center gap-2">
         <p className="text-7xl text-white font-normal">

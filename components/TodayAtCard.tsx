@@ -51,52 +51,60 @@ const timeData = [
 
 const windData = [
   {
-    time: '7 PM',
-    image_url: '/weather_icons/direction.png',
-    condition: 'broken clouds',
-    temp: 13,
-  },
-  {
-    time: '10 PM',
-    image_url: '/weather_icons/direction.png',
-    condition: 'broken clouds',
-    temp: 12,
-  },
-  {
-    time: '1 AM',
-    image_url: '/weather_icons/direction.png',
-    condition: 'scattered clouds',
-    temp: 9,
-  },
-  {
-    time: '4 AM',
-    image_url: '/weather_icons/direction.png',
-    condition: 'clear sky',
-    temp: 7,
-  },
-  {
     time: '7 AM',
     image_url: '/weather_icons/direction.png',
-    condition: 'clear sky',
-    temp: 8,
+    condition: 'direction',
+    direction: 90,
+    speed: 14,
   },
   {
     time: '10 AM',
     image_url: '/weather_icons/direction.png',
-    condition: 'clear sky',
-    temp: 15,
+    condition: 'direction',
+    direction: 90,
+    speed: 12,
   },
   {
     time: '1 PM',
     image_url: '/weather_icons/direction.png',
-    condition: 'clear sky',
-    temp: 19,
+    condition: 'direction',
+    direction: 90,
+    speed: 12,
   },
   {
     time: '4 PM',
     image_url: '/weather_icons/direction.png',
-    condition: 'clear sky',
-    temp: 20,
+    condition: 'direction',
+    direction: 90,
+    speed: 13,
+  },
+  {
+    time: '7 PM',
+    image_url: '/weather_icons/direction.png',
+    condition: 'direction',
+    direction: 90,
+    speed: 13,
+  },
+  {
+    time: '10 PM',
+    image_url: '/weather_icons/direction.png',
+    condition: 'direction',
+    direction: 90,
+    speed: 11,
+  },
+  {
+    time: '1 AM',
+    image_url: '/weather_icons/direction.png',
+    condition: 'direction',
+    direction: 90,
+    speed: 7,
+  },
+  {
+    time: '4 AM',
+    image_url: '/weather_icons/direction.png',
+    condition: 'direction',
+    direction: 90,
+    speed: 7,
   },
 ]
 
@@ -135,8 +143,11 @@ export default function TodayAtCard() {
               loading="lazy"
               alt={data.condition}
               title={data.condition}
+              style={{
+                transform: `rotate(${90 + Math.floor(Math.random() * 90)}deg)`,
+              }}
             />
-            <p>{data.temp}°</p>
+            <p>{data.speed} km/h</p>
           </div>
         ))}
       </div>
