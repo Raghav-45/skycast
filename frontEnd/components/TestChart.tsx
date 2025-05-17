@@ -7,6 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { format } from 'date-fns'
 const chartData = [
   { month: 'January', desktop: 186, mobile: 80 },
   { month: 'February', desktop: 305, mobile: 200 },
@@ -23,12 +24,12 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
+  temperature: {
+    label: 'Temperature (°C)',
     color: 'hsl(var(--chart-1))',
   },
-  mobile: {
-    label: 'Mobile',
+  humidity: {
+    label: 'Humidity (%)',
     color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig
@@ -45,6 +46,16 @@ interface ChartProps {
 
 export function Component({ data }: ChartProps) {
   if (!data) return null
+
+  const chartData = data.hourly.time.map((time, index) => ({
+    time: format(new Date(time), 'yyyy-MM-dd'), // Extract unique date
+    temperature: data.hourly.temperature_2m[index],
+    humidity: data.hourly.relative_humidity_2m[index],
+  }))
+
+  // Extract unique dates for X-axis ticks
+  const uniqueDates = [...new Set(chartData.map((item) => item.time))]
+
   return (
     // <div className="relative bg-black/15 rounded-2xl col-span-4 h-[180px] p-6 flex flex-col justify-between">
     //   <h3 className="text-base font-semibold text-[#7B7980]">
@@ -58,60 +69,63 @@ export function Component({ data }: ChartProps) {
       <AreaChart
         accessibilityLayer
         data={chartData}
-        // margin={{
-        //   left: 12,
-        //   right: 12,
-        // }}
+        margin={{
+          top: 24,
+          left: 36,
+          right: 36,
+        }}
       >
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey="month"
-          tickLine={false}
+          dataKey="time"
+          tickLine
           axisLine={false}
-          tickMargin={8}
-          tickFormatter={(value) => value.slice(0, 3)}
+          tickMargin={9}
+          // Show only the unique dates (e.g., 3 intervals)
+          ticks={uniqueDates}
+          tickFormatter={(value) => format(new Date(value), 'MMM dd')}
         />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <defs>
-          <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="fillTemperature" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="var(--color-desktop)"
+              stopColor="var(--color-temperature)"
               stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="var(--color-desktop)"
+              stopColor="var(--color-temperature)"
               stopOpacity={0.1}
             />
           </linearGradient>
-          <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="fillHumidity" x1="0" y1="0" x2="0" y2="1">
             <stop
               offset="5%"
-              stopColor="var(--color-mobile)"
+              stopColor="var(--color-humidity)"
               stopOpacity={0.8}
             />
             <stop
               offset="95%"
-              stopColor="var(--color-mobile)"
+              stopColor="var(--color-humidity)"
               stopOpacity={0.1}
             />
           </linearGradient>
         </defs>
         <Area
-          dataKey="mobile"
+          dataKey="temperature"
           type="natural"
-          fill="url(#fillMobile)"
+          fill="url(#fillTemperature)"
           fillOpacity={0.4}
-          stroke="var(--color-mobile)"
+          stroke="var(--color-temperature)"
           stackId="a"
         />
         <Area
-          dataKey="desktop"
+          dataKey="humidity"
           type="natural"
-          fill="url(#fillDesktop)"
+          fill="url(#fillHumidity)"
           fillOpacity={0.4}
-          stroke="var(--color-desktop)"
+          stroke="var(--color-humidity)"
           stackId="a"
         />
       </AreaChart>
