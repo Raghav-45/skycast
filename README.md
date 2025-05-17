@@ -78,10 +78,19 @@ npm run dev
 
 2. **Backend Setup**
 ```bash
+# Create and activate virtual environment
 cd backEnd
+python -m venv venv
+.\venv\Scripts\Activate
+
+# Install dependencies
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+
+# Start the server on port 8001
+uvicorn app.main:app --reload --port 8001
 ```
+
+Note: For Unix-based systems, use `source venv/bin/activate` instead of `.\venv\Scripts\Activate`
 
 ## Development Highlights
 
