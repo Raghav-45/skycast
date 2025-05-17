@@ -1,4 +1,5 @@
 import { Search, MapPin } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export function SiteHeader() {
@@ -7,7 +8,13 @@ export function SiteHeader() {
       <div className="max-w-[1600px] w-full mx-auto px-8 flex justify-between items-center h-[110px]">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <img src="/vercel.svg" alt="SkyCast" className="h-8 w-8" />
+          <Image
+            src="/weather_icons/01n.png"
+            alt="SkyCast"
+            height={32}
+            width={32}
+            className="h-8 w-8"
+          />
           <h1 className="text-2xl font-bold">Sky Cast</h1>
         </Link>
 
