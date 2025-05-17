@@ -52,9 +52,9 @@ const forecastData: ForecastDay[] = [
 
 export default function FiveDayForecastCard() {
   return (
-    <div className="bg-[#1D1C1F] rounded-3xl p-8 text-[#DDDAE5] flex flex-col gap-y-3">
+    <div className=" text-[#DDDAE5] flex flex-col gap-y-3">
       <h2 className="text-xl font-semibold text-[#DDDAE5]">5 Days Forecast</h2>
-      <div className="flex flex-col gap-y-3">
+      <div className="flex flex-col gap-y-3 bg-[#1D1C1F] rounded-3xl px-8 py-6">
         {forecastData.map((day, index) => (
           <div key={index} className="flex items-center justify-between">
             <div className="flex items-center gap-4">
