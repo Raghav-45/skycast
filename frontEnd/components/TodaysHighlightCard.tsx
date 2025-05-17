@@ -1,6 +1,4 @@
-import {
-  DropletIcon,
-  EyeIcon,
+import {  DropletIcon,
   MoonIcon,
   SunIcon,
   ThermometerIcon,
@@ -9,7 +7,58 @@ import {
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 
-export default function TodaysHighlightCard() {
+interface TodaysHighlightProps {
+  data?: {
+    current: {
+      relative_humidity_2m: number
+      apparent_temperature: number
+      surface_pressure: number
+      wind_speed_10m: number
+    }
+    daily: {
+      sunrise: string[]
+      sunset: string[]
+    }
+  }
+}
+
+export default function TodaysHighlightCard({ data }: TodaysHighlightProps) {
+  if (!data) return null
+
+  const { current, daily } = data
+  const formatTime = (timeStr: string) => {
+    return new Date(timeStr).toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    })
+  }
+
+  const getAQIStatus = (aqi: number) => {
+    if (aqi <= 50)
+      return {
+        text: 'Good',
+        color: 'bg-green-600/10 text-green-500 border-green-600/60',
+      }
+    if (aqi <= 100)
+      return {
+        text: 'Fair',
+        color: 'bg-amber-600/10 text-amber-500 border-amber-600/60',
+      }
+    if (aqi <= 150)
+      return {
+        text: 'Moderate',
+        color: 'bg-orange-600/10 text-orange-500 border-orange-600/60',
+      }
+    return {
+      text: 'Poor',
+      color: 'bg-red-600/10 text-red-500 border-red-600/60',
+    }
+  }
+
+  const aqi = 50 // This would come from an air quality API
+  const aqiStatus = getAQIStatus(aqi)
+
   return (
     <div className="bg-[#1D1C1F] rounded-3xl p-8 text-[#DDDAE5] h-full flex flex-col gap-y-3">
       <h2 className="text-xl font-semibold text-[#DDDAE5]">
@@ -18,9 +67,13 @@ export default function TodaysHighlightCard() {
       <div className="grid grid-cols-4 gap-4">
         <div className="relative bg-black/15 rounded-2xl col-span-2 h-[180px] p-6 flex flex-col justify-between">
           <div className="absolute top-5 right-5">
-            <Badge className="bg-amber-600/10 dark:bg-amber-600/20 hover:bg-amber-600/10 text-amber-500 border-amber-600/60 shadow-none rounded-full">
-              <div className="h-1.5 w-1.5 rounded-full bg-amber-500 mr-2" />
-              Fair
+            <Badge
+              className={`${
+                aqiStatus.color
+              } hover:bg-amber-600/10 shadow-none rounded-full`}
+            >
+              <div className="h-1.5 w-1.5 rounded-full bg-current mr-2" />
+              {aqiStatus.text}
             </Badge>
           </div>
           <h3 className="text-base font-semibold text-[#7B7980]">
@@ -61,7 +114,9 @@ export default function TodaysHighlightCard() {
                 <p className="text-sm font-semibold text-[#7B7980] mb-1">
                   Sunrise
                 </p>
-                <p className="text-3xl font-semibold text-[#DDDAE5]">6:00 AM</p>
+                <p className="text-3xl font-semibold text-[#DDDAE5]">
+                  {formatTime(daily.sunrise[0])}
+                </p>
               </div>
             </div>
             <div className="flex w-full gap-6 items-center">
@@ -70,7 +125,9 @@ export default function TodaysHighlightCard() {
                 <p className="text-sm font-semibold text-[#7B7980] mb-1">
                   Sunset
                 </p>
-                <p className="text-3xl font-semibold text-[#DDDAE5]">8:45 PM</p>
+                <p className="text-3xl font-semibold text-[#DDDAE5]">
+                  {formatTime(daily.sunset[0])}
+                </p>
               </div>
             </div>
           </div>
@@ -83,7 +140,8 @@ export default function TodaysHighlightCard() {
             <div className="flex w-full gap-6 items-center justify-between">
               <DropletIcon className="size-12" />
               <p className="text-3xl text-[#DDDAE5] font-semibold">
-                69<span className="text-2xl">%</span>
+                {Math.round(current.relative_humidity_2m)}
+                <span className="text-2xl">%</span>
               </p>
             </div>
           </div>
@@ -96,20 +154,22 @@ export default function TodaysHighlightCard() {
             <div className="flex w-full gap-6 items-center justify-between">
               <WavesIcon className="size-12" />
               <p className="text-3xl text-[#DDDAE5] font-semibold">
-                1024<span className="text-2xl">hPa</span>
+                {Math.round(current.surface_pressure)}
+                <span className="text-2xl">hPa</span>
               </p>
             </div>
           </div>
         </div>
 
-        {/* Visibility */}
+        {/* Wind Speed */}
         <div className="bg-black/15 rounded-2xl h-[150px] p-6 flex flex-col justify-between">
-          <h3 className="text-base font-semibold text-[#7B7980]">Visibility</h3>
+          <h3 className="text-base font-semibold text-[#7B7980]">Wind Speed</h3>
           <div className="flex flex-row items-center gap-x-2">
             <div className="flex w-full gap-6 items-center justify-between">
-              <EyeIcon className="size-12" />
+              <WindIcon className="size-12" />
               <p className="text-3xl text-[#DDDAE5] font-semibold">
-                10<span className="text-2xl">km</span>
+                {Math.round(current.wind_speed_10m)}
+                <span className="text-2xl">km/h</span>
               </p>
             </div>
           </div>
@@ -122,7 +182,8 @@ export default function TodaysHighlightCard() {
             <div className="flex w-full gap-6 items-center justify-between">
               <ThermometerIcon className="size-12" />
               <p className="text-3xl text-[#DDDAE5] font-semibold">
-                12°<span className="text-2xl">c</span>
+                {Math.round(current.apparent_temperature)}
+                <span className="text-2xl">°</span>
               </p>
             </div>
           </div>
