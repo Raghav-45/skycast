@@ -1,6 +1,7 @@
 import { CalendarIcon, MapPinIcon } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 import type { WeatherResponse } from '@/lib/types';
 
@@ -9,6 +10,32 @@ interface CurrentWeatherProps {
 }
 
 export default function CurrentWeatherCard({ data }: CurrentWeatherProps) {
+  const [location, setLocation] = useState('Loading...');
+
+  useEffect(() => {
+    const getLocation = async () => {
+      if (!data) return;
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${data.latitude}&lon=${data.longitude}`
+        );
+        const locationData = await response.json();
+        const city = locationData.address.city || 
+                    locationData.address.town || 
+                    locationData.address.village || 
+                    locationData.address.suburb ||
+                    locationData.address.county;
+        const country = locationData.address.country_code?.toUpperCase();
+        setLocation(`${city}, ${country}`);
+      } catch (error) {
+        console.error('Error getting location:', error);
+        setLocation('Location not found');
+      }
+    };
+
+    getLocation();
+  }, [data]);
+
   if (!data) return null;
 
   const current = data.current;
@@ -103,7 +130,7 @@ export default function CurrentWeatherCard({ data }: CurrentWeatherProps) {
         </li>
         <li className="flex items-center gap-2">
           <MapPinIcon className="h-6 w-6" />
-          <p className="text-base font-semibold text-[#7B7980]">London, GB</p>
+          <p className="text-base font-semibold text-[#7B7980]">{location}</p>
         </li>
       </ul>
     </div>
