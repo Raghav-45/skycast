@@ -11,6 +11,10 @@ A full-stack weather application that provides detailed weather information with
 - **Modern UI Components**: Built with a clean, responsive design using Tailwind CSS
 - **Weather Icons**: Custom weather condition icons for clear visual representation
 
+## Screenshot
+
+![SkyCast Screenshot](https://github.com/Raghav-45/skycast/blob/master/Screenshot.png)
+
 ## Tech Stack
 
 ### Frontend
@@ -25,11 +29,8 @@ A full-stack weather application that provides detailed weather information with
 - **Framework**: FastAPI (Python)
 - **Database**: Redis for caching weather data
 - **Weather Data**: Integration with weather API services
-- **Features**: 
+- **Upcoming Features**: 
   - Hazard detection
-  - Weather service integration
-  - Efficient data caching
-  - API endpoint management
 
 ## Project Structure
 
