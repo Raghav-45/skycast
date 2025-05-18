@@ -4,7 +4,7 @@ import { Search, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { ChangeEvent, FormEvent, MouseEvent } from 'react'
 
 interface SearchResult {
@@ -47,13 +47,15 @@ export function SiteHeader() {
   const [isLoading, setIsLoading] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
 
-  const fetchSearchResults = useCallback(async (value: string) => {
+  const fetchSearchResults = async (value: string) => {
     if (!value) return
 
     setIsLoading(true)
     try {
       const response = await fetch(
-        `/api/proxy/geocoding?service=openweather&q=${encodeURIComponent(value)}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+          value
+        )}&limit=5&appid=ed2e30593db614e47ce92c4ab1586d55`
       )
       const data: GeocodingResponse[] = await response.json()
 
@@ -76,24 +78,19 @@ export function SiteHeader() {
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }
 
-  const handleSearchInput = useCallback(
-    (value: string) => {
+  const handleSearchInput = useMemo(() => {
+    const search = (value: string) => {
       if (value.length >= 2) {
         fetchSearchResults(value)
       } else {
         setShowResults(false)
         setSearchResults([])
       }
-    },
-    [fetchSearchResults]
-  )
-
-  const debouncedSearch = useMemo(
-    () => debounce(handleSearchInput, 300),
-    [handleSearchInput]
-  )
+    }
+    return debounce(search, 300)
+  }, [])
 
   const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -123,7 +120,7 @@ export function SiteHeader() {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setSearchQuery(value)
-    debouncedSearch(value)
+    handleSearchInput(value)
   }
 
   const handleResultClick = (result: SearchResult) => {
