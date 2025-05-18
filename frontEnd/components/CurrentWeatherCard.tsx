@@ -14,10 +14,9 @@ export default function CurrentWeatherCard({ data }: CurrentWeatherProps) {
 
   useEffect(() => {
     const getLocation = async () => {
-      if (!data) return;
-      try {
+      if (!data) return;      try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${data.latitude}&lon=${data.longitude}`
+          `/api/proxy/geocoding?service=nominatim&lat=${data.latitude}&lon=${data.longitude}`
         );
         const locationData = await response.json();
         const city = locationData.address.city || 

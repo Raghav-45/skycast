@@ -4,7 +4,7 @@ import { Search, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { ChangeEvent, FormEvent, MouseEvent } from 'react'
 
 interface SearchResult {
@@ -47,41 +47,36 @@ export function SiteHeader() {
   const [isLoading, setIsLoading] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
 
-  const fetchSearchResults = useCallback(
-    async (value: string) => {
-      if (!value) return
+  const fetchSearchResults = useCallback(async (value: string) => {
+    if (!value) return
 
-      setIsLoading(true)
-      try {
-        const response = await fetch(
-          `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
-            value
-          )}&limit=5&appid=ed2e30593db614e47ce92c4ab1586d55`
-        )
-        const data: GeocodingResponse[] = await response.json()
+    setIsLoading(true)
+    try {
+      const response = await fetch(
+        `/api/proxy/geocoding?service=openweather&q=${encodeURIComponent(value)}`
+      )
+      const data: GeocodingResponse[] = await response.json()
 
-        const formattedResults: SearchResult[] = data.map((item) => ({
-          id: `${item.lat}-${item.lon}`,
-          name: item.local_names?.en || item.name,
-          region: [
-            item.state || '',
-            item.country || '',
-          ].filter(Boolean).join(', '),
-          lat: item.lat,
-          lon: item.lon,
-        }))
+      const formattedResults: SearchResult[] = data.map((item) => ({
+        id: `${item.lat}-${item.lon}`,
+        name: item.local_names?.en || item.name,
+        region: [
+          item.state || '',
+          item.country || '',
+        ].filter(Boolean).join(', '),
+        lat: item.lat,
+        lon: item.lon,
+      }))
 
-        setSearchResults(formattedResults)
-        setShowResults(true)
-      } catch (error) {
-        console.error('Error fetching search results:', error)
-        setSearchResults([])
-      } finally {
-        setIsLoading(false)
-      }
-    },
-    []
-  )
+      setSearchResults(formattedResults)
+      setShowResults(true)
+    } catch (error) {
+      console.error('Error fetching search results:', error)
+      setSearchResults([])
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
 
   const handleSearchInput = useCallback(
     (value: string) => {
@@ -95,8 +90,8 @@ export function SiteHeader() {
     [fetchSearchResults]
   )
 
-  const debouncedSearch = useCallback(
-    debounce(handleSearchInput, 300),
+  const debouncedSearch = useMemo(
+    () => debounce(handleSearchInput, 300),
     [handleSearchInput]
   )
 
