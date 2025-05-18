@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import CurrentWeatherCard from '@/components/CurrentWeatherCard'
 import TodaysHighlightCard from '@/components/TodaysHighlightCard'
@@ -45,17 +45,19 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col gap-y-8 container max-w-[1600px] px-9 mx-auto">
-      <div className="grid grid-cols-[360px_minmax(0,1fr)] gap-8 w-full">
-        <div className="flex flex-col gap-4">
-          <CurrentWeatherCard data={weatherData?.current} />
-          <FiveDayForecastCard data={weatherData?.forecast} />
-        </div>
-        <div className="flex flex-col gap-4">
-          <TodaysHighlightCard data={weatherData?.current} />
-          <TodayAtCard data={weatherData?.current} />
+    <Suspense fallback={<p>loading...</p>}>
+      <div className="flex flex-col gap-y-8 container max-w-[1600px] px-9 mx-auto">
+        <div className="grid grid-cols-[360px_minmax(0,1fr)] gap-8 w-full">
+          <div className="flex flex-col gap-4">
+            <CurrentWeatherCard data={weatherData?.current} />
+            <FiveDayForecastCard data={weatherData?.forecast} />
+          </div>
+          <div className="flex flex-col gap-4">
+            <TodaysHighlightCard data={weatherData?.current} />
+            <TodayAtCard data={weatherData?.current} />
+          </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   )
 }
