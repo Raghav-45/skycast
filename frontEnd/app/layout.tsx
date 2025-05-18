@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Nunito_Sans } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
+import { SiteHeader } from '@/components/site-header'
 
 const nunito = Nunito_Sans({
   subsets: ['latin'],
@@ -29,7 +30,8 @@ export default function RootLayout({
         )}
       >
         <div className="relative flex min-h-screen flex-col bg-[#131214]">
-          {children}
+          <SiteHeader />
+          <main className="flex-1">{children}</main>
         </div>
       </body>
     </html>
