@@ -14,12 +14,16 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const searchParams = useSearchParams()
 
+  const lat = searchParams.get('lat')
+    ? parseFloat(searchParams.get('lat')!)
+    : 51.5074 // London's latitude
+  const lng = searchParams.get('lng')
+    ? parseFloat(searchParams.get('lng')!)
+    : -0.1278 // London's longitude
+
   useEffect(() => {
     const getWeatherData = async () => {
       try {
-        const lat = searchParams.get('lat') ? parseFloat(searchParams.get('lat')!) : 51.5074 // London's latitude
-        const lng = searchParams.get('lng') ? parseFloat(searchParams.get('lng')!) : -0.1278 // London's longitude
-        
         const data = await fetchWeatherData(lat, lng)
         setWeatherData(data)
       } catch (error) {
@@ -30,7 +34,7 @@ export default function Home() {
     }
 
     getWeatherData()
-  }, [searchParams])
+  }, [lat, lng])
 
   if (loading) {
     return (
