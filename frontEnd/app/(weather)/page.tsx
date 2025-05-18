@@ -1,7 +1,7 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+// import { useSearchParams } from 'next/navigation'
 import CurrentWeatherCard from '@/components/CurrentWeatherCard'
 import TodaysHighlightCard from '@/components/TodaysHighlightCard'
 import TodayAtCard from '@/components/TodayAtCard'
@@ -12,14 +12,17 @@ import type { WeatherData } from '@/lib/types'
 export default function Home() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
   const [loading, setLoading] = useState(true)
-  const searchParams = useSearchParams()
+  // const searchParams = useSearchParams()
 
-  const lat = searchParams.get('lat')
-    ? parseFloat(searchParams.get('lat')!)
-    : 51.5074 // London's latitude
-  const lng = searchParams.get('lng')
-    ? parseFloat(searchParams.get('lng')!)
-    : -0.1278 // London's longitude
+  // const lat = searchParams.get('lat')
+  //   ? parseFloat(searchParams.get('lat')!)
+  //   : 51.5074 // London's latitude
+  // const lng = searchParams.get('lng')
+  //   ? parseFloat(searchParams.get('lng')!)
+  //   : -0.1278 // London's longitude
+
+  const lat = 51.5074 // London's latitude
+  const lng = -0.1278 // London's longitude
 
   useEffect(() => {
     const getWeatherData = async () => {
@@ -45,19 +48,17 @@ export default function Home() {
   }
 
   return (
-    <Suspense fallback={<p>loading...</p>}>
-      <div className="flex flex-col gap-y-8 container max-w-[1600px] px-9 mx-auto">
-        <div className="grid grid-cols-[360px_minmax(0,1fr)] gap-8 w-full">
-          <div className="flex flex-col gap-4">
-            <CurrentWeatherCard data={weatherData?.current} />
-            <FiveDayForecastCard data={weatherData?.forecast} />
-          </div>
-          <div className="flex flex-col gap-4">
-            <TodaysHighlightCard data={weatherData?.current} />
-            <TodayAtCard data={weatherData?.current} />
-          </div>
+    <div className="flex flex-col gap-y-8 container max-w-[1600px] px-9 mx-auto">
+      <div className="grid grid-cols-[360px_minmax(0,1fr)] gap-8 w-full">
+        <div className="flex flex-col gap-4">
+          <CurrentWeatherCard data={weatherData?.current} />
+          <FiveDayForecastCard data={weatherData?.forecast} />
+        </div>
+        <div className="flex flex-col gap-4">
+          <TodaysHighlightCard data={weatherData?.current} />
+          <TodayAtCard data={weatherData?.current} />
         </div>
       </div>
-    </Suspense>
+    </div>
   )
 }
