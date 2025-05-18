@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { WeatherData, WeatherResponse } from './types';
 
-const API_BASE_URL = 'http://localhost:8001/api';
+const API_BASE_URL = 'http://134.209.151.2/api';
 
 export const fetchWeatherData = async (lat: number = 51.5074, lon: number = -0.1278): Promise<WeatherData> => {
   try {
